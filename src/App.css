@@ -1,0 +1,190 @@
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:wght@400;600&family=Sora:wght@400;500;600&display=swap');
+
+:root {
+  --bg-deep: #05070d;
+  --bg-mid: #101622;
+  --accent: #ffc67a;
+  --accent-soft: rgba(255, 198, 122, 0.15);
+  --accent-strong: #ffb347;
+  --border-muted: rgba(255, 255, 255, 0.1);
+  --text-bright: #f9f6f1;
+  --text-muted: rgba(249, 246, 241, 0.7);
+  --panel-shine: rgba(255, 255, 255, 0.04);
+  font-family: 'Sora', 'DM Sans', system-ui, -apple-system, sans-serif;
+}
+
+.app-frame {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  background: radial-gradient(circle at top, rgba(255, 198, 122, 0.3), transparent 40%),
+    linear-gradient(180deg, var(--bg-deep) 0%, var(--bg-mid) 60%, #05070d 100%);
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.sky-glow {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 30% 20%, rgba(255, 255, 255, 0.16), transparent 55%),
+    radial-gradient(circle at 70% 40%, rgba(255, 198, 122, 0.25), transparent 45%);
+  filter: blur(0.5px);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.capybara-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  z-index: 1;
+}
+
+.hud-stack {
+  position: absolute;
+  inset: auto 0 0 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  padding: 2.5rem 3rem;
+  gap: 1rem;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.status-panel,
+.hint-panel {
+  width: clamp(220px, 25vw, 320px);
+  padding: 1rem 1.25rem;
+  border-radius: 20px;
+  border: 1px solid var(--border-muted);
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.05), rgba(5, 7, 13, 0.85));
+  backdrop-filter: blur(18px);
+  box-shadow: 0 20px 40px rgba(5, 7, 13, 0.7), inset 0 0 0 1px rgba(255, 255, 255, 0.02);
+}
+
+.status-panel h3 {
+  font-family: 'Fraunces', 'Times New Roman', serif;
+  font-size: 0.95rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 0.35rem;
+}
+
+.status-panel strong {
+  display: block;
+  font-size: clamp(1.4rem, 2vw, 1.9rem);
+  font-family: 'Fraunces', 'Times New Roman', serif;
+  color: var(--text-bright);
+  margin-bottom: 0.35rem;
+}
+
+.status-panel p {
+  margin: 0.2rem 0 0;
+  font-size: 0.82rem;
+  letter-spacing: 0.18em;
+  color: var(--text-muted);
+  text-transform: uppercase;
+}
+
+.status-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin-top: 0.4rem;
+}
+
+.status-meta-item {
+  margin: 0;
+  font-size: 0.75rem;
+  line-height: 1.5;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(249, 246, 241, 0.65);
+}
+
+.status-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.35rem 0.95rem;
+  border-radius: 999px;
+  font-size: 0.9rem;
+  letter-spacing: 0.12em;
+  background: var(--accent-soft);
+  color: var(--accent-strong);
+  border: 1px solid rgba(255, 198, 122, 0.6);
+}
+
+.hint-panel {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(80px, 1fr));
+  gap: 0.8rem;
+}
+
+.hint-panel h4 {
+  grid-column: 1 / -1;
+  margin: 0 0 0.5rem;
+  font-family: 'Fraunces', 'Times New Roman', serif;
+  font-size: 0.9rem;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+}
+
+.hint-chip {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  padding: 0.65rem 0.75rem;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  transition: border 0.25s ease, transform 0.25s ease;
+  pointer-events: auto;
+}
+
+.hint-chip.active {
+  border-color: rgba(255, 198, 122, 0.6);
+  transform: translateY(-3px);
+  background: rgba(255, 198, 122, 0.08);
+}
+
+.hint-chip span {
+  color: var(--text-muted);
+  font-size: 0.75rem;
+  letter-spacing: 0.2em;
+}
+
+.hint-chip strong {
+  font-size: 0.95rem;
+  color: var(--text-bright);
+}
+
+.floating-pulse {
+  position: absolute;
+  width: 24vw;
+  height: 24vw;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 182, 97, 0.4), transparent 60%);
+  filter: blur(4px);
+  bottom: 5%;
+  right: 10%;
+  z-index: 0;
+  pointer-events: none;
+}
+
+@media (max-width: 900px) {
+  .hud-stack {
+    flex-direction: column;
+    align-items: stretch;
+    padding: 1.5rem 1.25rem 1.25rem;
+  }
+
+  .status-panel,
+  .hint-panel {
+    width: 100%;
+  }
+}
